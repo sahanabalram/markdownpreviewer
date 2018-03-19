@@ -1,9 +1,11 @@
-import React,{Component} from "react";
+import React, {Component} from "react";
 
 class Title extends Component {
-    render(){
-        return(
-            <div>Mark Down Previewer</div>
+    render() {
+        return (
+            <div>
+                <h2>Mark Down Previewer</h2>
+            </div>
         )
     }
 }
