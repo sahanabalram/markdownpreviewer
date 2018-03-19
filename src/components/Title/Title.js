@@ -3,7 +3,7 @@ import React,{Component} from "react";
 class Title extends Component {
     render(){
         return(
-            <div>Title Component</div>
+            <div>Mark Down Previewer</div>
         )
     }
 }
