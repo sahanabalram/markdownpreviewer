@@ -1,29 +1,43 @@
 import React, {Component} from "react";
-import {FormGroup, ControlLabel, FormControl} from "react-bootstrap";
 
-let marked = require("markdown");
+const marked = require("marked");
 class Form extends Component {
-    state = {
-        markdown: ""
+    constructor(props) {
+        super(props);
+        this.state = {
+            values: '\nHeading\n=======\n\nSub-heading\n-----------\n \n### Another deeper heading\n ' +
+                    '\nParagraphs are separated\nby a blank line.\n\nLeave 2 spaces at the end of a l' +
+                    'ine to do a  \nline break\n\nText attributes *italic*, **bold**, \n`monospace`, ' +
+                    '~~strikethrough~~ .\n\nShopping list:\n\n  * apples\n  * oranges\n  * pears\n\nN' +
+                    'umbered list:\n\n  1. apples\n  2. oranges\n  3. pears\n\nThe rain---not the rei' +
+                    'gn---in\nSpain.\n\n *[Sahana Balram](https://freecodecamp.com/sahanabalram)*'
+        };
+        this.displayMarkdown = this
+            .displayMarkdown
+            .bind(this);
     }
-// to update value dynamically use built in javascript method onChange
-    updateMarkdown = function(markdown) {
-        this.setState({markdown: markdown});
+    displayMarkdown(event) {
+        this.setState({values: event.target.value});
+    }
+
+    plainHtml(value) {
+        return marked(value);
     }
     render() {
-        let {markdown} = this.state;
-        console.log(markdown);
         return (
-            <div className="container">
-                <div>
-                    <FormGroup controlId="formControlsTextarea">
-                        <ControlLabel>Markdown Area</ControlLabel>
-                        <FormControl componentClass="textarea" placeholder="Enter Markdown" value={markdown} onChange={(event) => this.updateMarkdown(event.target.value)}/>
-                    </FormGroup>
+            <div className="row">
+                <div className="col-md-6">
+                    <textarea
+                        cols="50"
+                        rows="25"
+                        value={this.state.values}
+                        onChange={this.displayMarkdown}/>
                 </div>
-                <div>
-                    <h2>Markdown Output</h2>
-                    <div></div>
+                <div className="col-md-6">
+                    <span
+                        dangerouslySetInnerHTML={{
+                        __html: this.plainHtml(this.state.values)
+                    }}></span>
                 </div>
             </div>
         )
